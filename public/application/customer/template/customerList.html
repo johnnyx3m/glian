@@ -1,0 +1,8 @@
+<div ng-controller="customerListController as c">
+	<div ng-repeat="customer in c.customers">
+		<span ng-bind="customer.id"></span>
+		<span ng-bind="customer.name"></span>
+		<span ng-bind="customer.address"></span>
+		<button ng-click="c.deleteCustomer(customer.id)">Delete</button>
+	</div>
+</div>

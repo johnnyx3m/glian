@@ -1,0 +1,9 @@
+<div ng-controller="customerAddController as c">
+	ID: <input type="text" ng-model="newcustomer.id">
+	Name: <input type="text" ng-model="newcustomer.name">
+	Address: <input type="text" ng-model="newcustomer.address">
+	<button ng-click="c.addCustomer(newcustomer)">Add</button>
+
+	<div ng-bind="c.status"></div>
+
+</div>

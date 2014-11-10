@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<style type="text/css">
+    	html,body{
+			height: 100%; 
+      		width: 100%;
+      		padding: 0;
+      		margin: 0;
+    	}
+      div#map-canvas { 
+      	height: 100%; 
+      	width: 70%;
+      	border: 1px solid #ccc;
+      	float: left;
+      }
+      div#righpanel{
+      	float:right;
+      	width: 29%;
+      }
+    </style>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: { lat: 10.2833, lng: 123.9},
+          zoom: 12
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body ng-app="gmapApp">
+  	<link href="dist/css/animation.css" rel="stylesheet" type="text/css" />
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <div id="map-canvas"></div>
+
+    <div id="righpanel">
+    	<div style="padding:15px;">
+          <h2>Salesman Tracker</h2>
+          <div ng-view class="slide-animation"></div>
+    	</div>
+    </div>
+
+    <script src="dist/js/lib/angular.js"></script>
+    <script src="dist/js/lib/angular-route.js"></script>
+    <script src="dist/js/lib/angular-animate.js"></script>
+    <script src="dist/js/lib/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript">
+      var app = angular.module("gmapApp",["ngRoute"]);
+      app.config(["$routeProvider",function($routeProvider){
+        $routeProvider.when("/",{
+          templateUrl: "application/salesman/template/salesmanList.html"
+        }).when("/add",{
+          templateUrl: "application/salesman/template/salesmanAdd.html"
+        }).otherwise({redirectTo:"/"});
+      }]);
+
+      app.controller("addSalesmanController",["SalesmanFactory","$scope","$location",function(SalesmanFactory,$scope,$location){
+        var self = this;
+        self.addSalesman = function(salesman){
+          SalesmanFactory.addSalesman(salesman).success(function(){
+            $location.path("/");
+            $scope.$apply();
+          }).error(function(){
+            console.log("Error");
+          });
+        }
+      }]);
+      app.controller("getSalesmenController",["SalesmanFactory","$scope","$location",function(SalesmanFactory,$scope,$location){
+        var self = this;
+        self.salesmen = {};
+        SalesmanFactory.getSalesmen().success(function(data){
+          self.salesmen = data;
+        }).error(function(){
+          console.log("Error");
+        });
+
+        self.deleteSalesman = function(id){
+          SalesmanFactory.deleteSalesman(id).success(function(){
+            for ( var i=0; i < self.salesmen.length; i++ ) {
+              if ( self.salesmen[ i ].id === id ) {
+                self.salesmen.splice( i, 1 );
+                break;
+              }
+            }
+          }).error(function(){
+            console.log("Error");
+          });
+        }
+
+      }]);
+
+    </script>
+    <script src="services/SalesmanFactory.js"></script>
+  </body>
+</html>

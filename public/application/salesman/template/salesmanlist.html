@@ -1,0 +1,13 @@
+
+<div ng-controller="getSalesmenController as ctrl">
+	<a class="btn btn-default" href="#/add">Add Salesman</a><br><br>
+	<table class="table table-striped">
+		<tr ng-repeat="salesman in ctrl.salesmen">
+		  	<td><a href="#" ng-bind="salesman.id"></a></td>
+			<td ng-bind="salesman.name"></td>
+		    <td ng-bind="salesman.longitude"></td>
+		    <td ng-bind="salesman.latitude"></td>
+		    <td><span style="cursor:pointer" class="glyphicon glyphicon-remove delete" ng-click="ctrl.deleteSalesman(salesman.id)"></span></td>
+		</tr>  
+	</table>
+</div>	

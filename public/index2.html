@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="customerPortalApp">
+<head>
+	<meta charset="UTF-8">
+	<title> Customer Management </title>
+	<link href="dist/css/common.css" rel="stylesheet" type="text/css" />
+	
+</head>
+<body>
+
+	<ul>
+		<li><a href="#/">List all customers</a></li>
+		<li><a href="#/add">Add customer</a></li>
+	</ul>
+
+
+	<div ng-view></div>
+
+	<script src="dist/js/lib/angular.js"></script>
+	<script src="dist/js/lib/angular-route.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("customerPortalApp",["ngRoute"]);
+		app.config(['$routeProvider', function($routeProvider) {
+			$routeProvider.when("/",{
+				templateUrl:"application/customer/template/customerList.html"
+			}).when("/add",{
+				templateUrl:"application/customer/template/customerAdd.html"
+			}).otherwise({redirectTo:"/"});	
+		}]);
+
+		app.controller("customerListController",["CustomerFactory",function(CustomerFactory){
+			var self = this;
+			self.customers = [{id:1,name:"John",address:"test"}];
+			self.status = "";
+			CustomerFactory.getCustomers().success(function(data){
+				self.customers = data;
+			}).error(function ( data, status, headers, config ){
+				console.log( data + status );
+			});
+			self.deleteCustomer = function(id){
+				console.log(id);
+				CustomerFactory.deleteCustomer(id).success(function(){
+					self.status = "deleted!";
+				}).error(function(){
+					self.status = "error";
+				});
+			}
+		}]);
+
+		app.controller("customerAddController",["CustomerFactory",function(CustomerFactory){
+			var self = this;
+			self.status = "";
+			self.addCustomer = function(newcustomer){
+				CustomerFactory.addCustomer(newcustomer).success(function(data){
+					self.status = "Saved";
+				}).error(function(data, status, headers, config){
+					self.status = "Error";
+				});
+			}
+			
+		}]);
+
+	</script>	
+	<script src="services/CustomerFactory.js"></script>
+</body>
+</html>
+
