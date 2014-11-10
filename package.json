@@ -1,5 +1,5 @@
 {
-  "name": "angularEmployeeManagement",
+  "name": "salesmanTracker",
   "version": "1.0.0",
   "description": "angularTodo ===========",
   "main": "server.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xxryan1234/angularEmployeeManagement.git"
+    "url": "https://github.com/johnnyx3m/salesmanTracker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xxryan1234/angularEmployeeManagement/issues"
+    "url": "https://github.com/johnnyx3m/glian/issues"
   },
-  "homepage": "https://github.com/xxryan1234/angularEmployeeManagement",
+  "homepage": "https://github.com/johnnyx3m/glian",
   "dependencies": {
     "body-parser": "^1.9.2",
     "connect": "^3.3.1",
