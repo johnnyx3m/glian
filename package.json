@@ -1,6 +1,6 @@
 {
   "name": "salesmanTracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "angularTodo ===========",
   "main": "server.js",
   "scripts": {
