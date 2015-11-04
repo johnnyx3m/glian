@@ -13,3 +13,5 @@ require( './app/routes' )( app );
 
 app.listen( db.port );
 console.log( 'App is starting in port '+db.port );
+
+console.log('test');
